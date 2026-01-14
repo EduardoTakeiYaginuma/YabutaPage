@@ -2,15 +2,51 @@
 import React from 'react';
 import type { Product, ProductVariation } from '../types';
 
+// Imagens dos produtos
+import granelImg from './images/products/Granel.png';
+import embaladosImg from './images/products/Embalados.png';
+import filmadosImg from './images/products/Filmados.png';
+
+// Componente em formato de ovo (branco por fora, amarelo por dentro)
+const EggIconWhite: React.FC<{ className?: string }> = ({ className = '' }) => (
+  <div className={`flex items-center ${className}`}>
+    {/* Egg shape */}
+    <div className="relative" style={{ width: '16px', height: '22px', flexShrink: 0 }}>
+      {/* White egg background */}
+      <span
+        className="absolute inset-0 bg-white"
+        style={{
+          width: '16px',
+          height: '22px',
+          borderRadius: '50% 50% 50% 50% / 60% 60% 40% 40%',
+        }}
+      />
+      {/* Yellow egg center */}
+      <span
+        className="absolute bg-yabuta-yellow"
+        style={{
+          width: '10px',
+          height: '14px',
+          borderRadius: '50% 50% 50% 50% / 60% 60% 40% 40%',
+          top: '4px',
+          left: '3px',
+        }}
+      />
+    </div>
+    {/* White connecting line */}
+    <div className="bg-white" style={{ width: '24px', height: '2px' }} />
+  </div>
+);
+
 const products: Product[] = [
   {
     id: 'granel',
     name: 'Granel',
-    image: 'https://www.yabuta.com.br/wp-content/uploads/2016/11/granel.jpg',
+    image: granelImg,
     generalDescription: 'Os ovos Yabuta são produzidos com o mais alto teor de qualidade para levar saúde à sua família. As embalagens da Yabuta podem ser facilmente recicladas após o consumo dos ovos, colaborando com a preservação do meio ambiente.',
     variations: [
       {
-        photo: 'https://via.placeholder.com/300x200/F5F5F5/3A3A3A?text=Caixa+15+dúzias',
+        photo: granelImg,
         primaryPackaging: 'Caixa',
         quantity: '15 dúzias',
         availableTypes: 'Jumbo 2, Jumbão, Jumbo, Extra, Grande, Médio e Pequeno',
@@ -35,7 +71,7 @@ const products: Product[] = [
   {
     id: 'embalados',
     name: 'Embalados',
-    image: 'https://www.yabuta.com.br/wp-content/uploads/2016/11/embalados.jpg',
+    image: embaladosImg,
     generalDescription: 'Nossas embalagens práticas e seguras garantem a integridade e a qualidade dos ovos, ideais para o consumidor final.',
     variations: [
         { photo: 'https://via.placeholder.com/300x200/F5F5F5/3A3A3A?text=Estojo+6+ovos', primaryPackaging: 'Estojo', quantity: '6 ovos', availableTypes: 'Grande, Extra', colors: ['branco', 'vermelho'] },
@@ -48,7 +84,7 @@ const products: Product[] = [
   {
     id: 'filmados',
     name: 'Filmados',
-    image: 'https://www.yabuta.com.br/wp-content/uploads/2016/11/filmados.jpg',
+    image: filmadosImg,
     generalDescription: 'As opções filmadas oferecem proteção e visibilidade, mantendo o frescor e a qualidade que são a marca da Yabuta.',
     variations: [
         { photo: 'https://via.placeholder.com/300x200/F5F5F5/3A3A3A?text=Filmado+com+tampa', primaryPackaging: 'Filmado com tampa', quantity: '30, 20 e 12 ovos', availableTypes: 'Extra, Grande, Médio', colors: ['branco', 'vermelho'] },
@@ -58,7 +94,7 @@ const products: Product[] = [
   {
     id: 'caipira',
     name: 'Caipira',
-    image: 'https://www.yabuta.com.br/wp-content/uploads/2016/11/caipira.jpg',
+    image: granelImg,
     generalDescription: 'Produzidos por galinhas criadas livres, nossos ovos caipiras possuem um sabor autêntico e qualidade superior.',
     variations: [
         { photo: 'https://via.placeholder.com/300x200/F5F5F5/3A3A3A?text=Estojo+PET+10', primaryPackaging: 'Estojo PET', quantity: '10 ovos', availableTypes: 'Caipira', colors: ['vermelho'] },
@@ -67,7 +103,7 @@ const products: Product[] = [
   {
     id: 'codorna',
     name: 'Codorna',
-    image: 'https://www.yabuta.com.br/wp-content/uploads/2016/11/codorna.jpg',
+    image: embaladosImg,
     generalDescription: 'Pequenos no tamanho mas grandes no sabor e em nutrientes, os ovos de codorna Yabuta são perfeitos para diversas receitas.',
     variations: [
         { photo: 'https://via.placeholder.com/300x200/F5F5F5/3A3A3A?text=Estojo+PET+15', primaryPackaging: 'Estojo PET', quantity: '15 ovos', availableTypes: 'Codorna', colors: ['branco'] },
@@ -94,11 +130,8 @@ const ProductCard: React.FC<{ product: Product; onSelect: () => void }> = ({ pro
 
       <div className="px-1 text-left">
         <div className="flex items-center mb-3">
-            <div className="flex items-center">
-                <div className="w-6 h-6 rounded-full border-2 border-white"></div>
-                <div className="w-4 h-px bg-white -ml-1"></div>
-            </div>
-            <h3 className="text-xl font-semibold uppercase tracking-widest text-white ml-3">{product.name}</h3>
+            <EggIconWhite className="mr-4" />
+            <h3 className="text-xl font-semibold uppercase tracking-widest text-white">{product.name}</h3>
         </div>
         
         <div className="pl-10">
