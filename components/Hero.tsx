@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import logoYabuta from './images/logo/logo_yabuta_negativo.svg';
 
 const Hero: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -17,16 +18,14 @@ const Hero: React.FC = () => {
   };
   
   return (
-    <section id="hero" className="relative h-screen bg-yabuta-dark flex items-center justify-center text-white">
+    <section id="hero" className="relative h-screen flex items-center justify-center text-white">
       <div className="relative z-10 text-center p-4">
-        <div className={`inline-flex items-center space-x-4 mb-6 transition-all ease-out duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-            <div className="bg-yabuta-yellow p-4 rounded-xl">
-                <span className="text-white font-bold text-5xl font-serif">yb</span>
-            </div>
-            <div>
-                <h1 className="text-7xl md:text-8xl font-serif tracking-tighter">Yabuta</h1>
-                <p className="text-2xl md:text-3xl font-sans tracking-widest mt-1">desde 1947</p>
-            </div>
+        <div className={`mb-6 transition-all ease-out duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+            <img
+              src={logoYabuta}
+              alt="Yabuta desde 1947"
+              className="h-32 md:h-40 lg:h-48 w-auto mx-auto"
+            />
         </div>
         <p className={`text-xl md:text-2xl max-w-2xl mx-auto mb-10 font-light transition-opacity ease-out duration-1000 delay-200 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
           Uma trajetória marcada pelo pioneirismo e amor ao trabalho, levando qualidade à sua mesa.
