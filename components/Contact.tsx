@@ -1,5 +1,6 @@
 
 import React from 'react';
+import teamImage from './images/Contact/team.png';
 
 const InfoBlock: React.FC<{ title: string, children: React.ReactNode }> = ({ title, children }) => (
     <div>
@@ -32,7 +33,7 @@ const Contact: React.FC = () => {
         <section
             id="contact"
             className="relative py-28 bg-cover bg-center text-white"
-            style={{ backgroundImage: "url('https://www.yabuta.com.br/wp-content/uploads/2016/11/trabalhadores_yabuta_ovos-1.jpg')" }}
+            style={{ backgroundImage: `url(${teamImage})` }}
         >
             <div className="absolute inset-0 bg-yabuta-dark bg-opacity-80"></div>
 

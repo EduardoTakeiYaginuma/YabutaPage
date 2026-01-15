@@ -19,6 +19,7 @@ const Hero: React.FC = () => {
   
   return (
     <section id="hero" className="relative h-screen flex items-center justify-center text-white">
+      <div className="absolute inset-0 bg-black/40"></div>
       <div className="relative z-10 text-center p-4">
         <div className={`mb-6 transition-all ease-out duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
             <img
