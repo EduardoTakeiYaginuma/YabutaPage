@@ -35,7 +35,7 @@ const Header: React.FC = () => {
   ];
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'backdrop-blur-md bg-black/30 shadow-lg' : 'bg-transparent'}`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'backdrop-blur-lg bg-gray-800/50 shadow-lg' : 'bg-transparent'}`}>
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <div className="cursor-pointer" onClick={() => scrollToSection('hero')}>
           <YabutaLogo />
@@ -63,7 +63,7 @@ const Header: React.FC = () => {
       </div>
       
       {/* Mobile Menu */}
-      <div className={`md:hidden ${isMenuOpen ? 'max-h-screen' : 'max-h-0'} overflow-hidden transition-all duration-500 ease-in-out backdrop-blur-md bg-black/30`}>
+      <div className={`md:hidden ${isMenuOpen ? 'max-h-screen' : 'max-h-0'} overflow-hidden transition-all duration-500 ease-in-out backdrop-blur-lg bg-gray-800/50`}>
         <nav className="flex flex-col items-center py-4 space-y-4">
           {navLinks.map((link) => (
             <button

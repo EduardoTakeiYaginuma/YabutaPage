@@ -10,9 +10,9 @@ const EggColor: React.FC<{ color: 'branco' | 'vermelho' }> = ({ color }) => (
 );
 
 const VariationCard: React.FC<{ variation: ProductVariation }> = ({ variation }) => (
-  <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
-    <img src={variation.photo} alt={variation.primaryPackaging} className="w-full h-48 object-cover bg-gray-100" />
+  <div className="bg-white rounded-lg shadow-md overflow-hidden border border-yabuta-yellow">
     <div className="p-6">
+      <h3 className="font-bold text-lg text-yabuta-dark mb-4">{variation.primaryPackaging}</h3>
       <dl>
         <div className="flex justify-between py-2 border-b">
           <dt className="font-semibold text-gray-700">Embalagem</dt>
@@ -51,10 +51,15 @@ const ProductDetail: React.FC<{ product: Product; onBack: () => void }> = ({ pro
           Voltar para todos os produtos
         </button>
 
-        <header className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-serif text-yabuta-dark">{product.name}</h1>
-          <p className="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">{product.generalDescription}</p>
-          <div className="w-24 h-1 bg-yabuta-yellow mx-auto mt-6"></div>
+        <header className="mb-16 flex flex-col md:flex-row items-center md:space-x-12">
+          <div className="md:w-1/4 w-full mb-8 md:mb-0">
+            <img src={product.image} alt={product.name} className="rounded-lg shadow-lg object-cover w-full" />
+          </div>
+          <div className="md:w-2/4 w-full text-center md:text-left">
+            <h1 className="text-5xl md:text-6xl font-serif text-yabuta-dark">{product.name}</h1>
+            <p className="text-lg text-gray-600 mt-4">{product.generalDescription}</p>
+            <div className="w-24 h-1 bg-yabuta-yellow mt-6 mx-auto md:mx-0"></div>
+          </div>
         </header>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
