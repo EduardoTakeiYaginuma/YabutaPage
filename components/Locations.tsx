@@ -152,10 +152,10 @@ const BrazilMap: React.FC<{ onStateClick: (state: StateKey) => void; selectedSta
             </g>
 
             {/* Textos dos estados */}
-            <text x="310" y="211.6" fontFamily="Arial" fontSize="10" fontWeight="bold" fill="white" style={{ pointerEvents: 'none' }}>TO</text>
-            <text x="390" y="190" fontFamily="Arial" fontSize="10" fontWeight="bold" fill="white" style={{ pointerEvents: 'none' }}>MT</text>
-            <text x="120" y="130" fontFamily="Arial" fontSize="10" fontWeight="bold" fill="white" style={{ pointerEvents: 'none' }}>MS</text>
-            <text x="280" y="100" fontFamily="Arial" fontSize="10" fontWeight="bold" fill="white" style={{ pointerEvents: 'none' }}>SP</text>
+            <text x="308" y="215" fontFamily="Arial" fontSize="14" fontWeight="bold" fill="white" style={{ pointerEvents: 'none' }}>TO</text>
+            <text x="230" y="240" fontFamily="Arial" fontSize="14" fontWeight="bold" fill="white" style={{ pointerEvents: 'none' }}>MT</text>
+            <text x="230" y="325" fontFamily="Arial" fontSize="14" fontWeight="bold" fill="white" style={{ pointerEvents: 'none' }}>MS</text>
+            <text x="306" y="347" fontFamily="Arial" fontSize="14" fontWeight="bold" fill="white" style={{ pointerEvents: 'none' }}>SP</text>
         </svg>
     );
 };
