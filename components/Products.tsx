@@ -6,6 +6,7 @@ import type { Product, ProductVariation } from '../types';
 import granelImg from './images/products/Granel.png';
 import embaladosImg from './images/products/Embalados.png';
 import filmadosImg from './images/products/Filmados.png';
+import especiaisImg from './images/products/especiais.png';
 
 // Componente em formato de ovo (branco por fora, amarelo por dentro)
 const EggIconWhite: React.FC<{ className?: string }> = ({ className = '' }) => (
@@ -110,6 +111,15 @@ const products: Product[] = [
         { photo: 'https://via.placeholder.com/300x200/F5F5F5/3A3A3A?text=Estojo+PET+30', primaryPackaging: 'Estojo PET', quantity: '30 ovos', availableTypes: 'Codorna', colors: ['branco'] },
     ],
   },
+  {
+    id: 'especiais',
+    name: 'Especiais',
+    image: filmadosImg,
+    generalDescription: 'Ovos especiais enriquecidos para uma dieta mais saudável e nutritiva, como os com Omega 3.',
+    variations: [
+        { photo: 'https://via.placeholder.com/300x200/E5E5E5/3A3A3A?text=Omega+3+Ovo', primaryPackaging: 'Estojo PET', quantity: '10 ovos', availableTypes: 'Omega 3', colors: ['branco'] },
+    ],
+  },
 ];
 
 const ProductCard: React.FC<{ product: Product; onSelect: () => void }> = ({ product, onSelect }) => {
@@ -135,17 +145,15 @@ const ProductCard: React.FC<{ product: Product; onSelect: () => void }> = ({ pro
         </div>
         
         <div className="pl-10">
-          <ul className="space-y-1 text-yabuta-dark min-h-[100px]">
+          <div className="space-y-1 text-yabuta-dark min-h-[100px]">
               {product.variations.length > 0 ? (
-                  product.variations.slice(0, 4).map((v, i) => (
-                      <li key={i}>
-                          &middot; {getVariationDescription(v)}
-                      </li>
-                  ))
+                  <p>
+                      &middot; {product.variations.slice(0, 4).map(v => getVariationDescription(v)).join(', ')}
+                  </p>
               ) : (
-                  <li className="text-gray-100 italic">&middot; Detalhes em breve.</li>
+                  <p className="text-gray-100 italic">&middot; Detalhes em breve.</p>
               )}
-          </ul>
+          </div>
 
           <p className="mt-3 font-bold text-yabuta-dark group-hover:underline">
               veja mais
@@ -165,7 +173,7 @@ const Products: React.FC<{ onProductSelect: (product: Product) => void }> = ({ o
           <div className="w-24 h-1 bg-white opacity-50 mx-auto mt-4"></div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-x-8 gap-y-12">
+        <div className="flex gap-8 overflow-x-auto">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} onSelect={() => onProductSelect(product)} />
           ))}
