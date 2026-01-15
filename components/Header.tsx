@@ -10,7 +10,7 @@ const YabutaLogo: React.FC = () => (
 );
 
 
-const Header: React.FC = () => {
+const Header: React.FC<{ variant?: 'default' | 'product-detail' }> = ({ variant = 'default' }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -23,7 +23,11 @@ const Header: React.FC = () => {
   }, []);
 
   const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    if (variant === 'product-detail') {
+      window.location.href = `/#${id}`;
+    } else {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    }
     setIsMenuOpen(false);
   };
 
@@ -34,8 +38,20 @@ const Header: React.FC = () => {
     { id: 'contact', label: 'Contato' },
   ];
 
+  const headerBaseClass = "fixed top-0 left-0 right-0 z-50 transition-all duration-300";
+  
+  const defaultVariantClass = isScrolled 
+    ? 'backdrop-blur-lg bg-gray-800/50 shadow-lg' 
+    : 'bg-transparent';
+  
+  const productDetailVariantClass = 'backdrop-blur-lg bg-yabuta-yellow/95 shadow-lg';
+
+  const mobileMenuClass = variant === 'product-detail' 
+    ? productDetailVariantClass
+    : 'backdrop-blur-lg bg-gray-800/50 shadow-lg';
+
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'backdrop-blur-lg bg-gray-800/50 shadow-lg' : 'bg-transparent'}`}>
+    <header className={`${headerBaseClass} ${variant === 'product-detail' ? productDetailVariantClass : defaultVariantClass}`}>
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <div className="cursor-pointer" onClick={() => scrollToSection('hero')}>
           <YabutaLogo />
@@ -63,7 +79,7 @@ const Header: React.FC = () => {
       </div>
       
       {/* Mobile Menu */}
-      <div className={`md:hidden ${isMenuOpen ? 'max-h-screen' : 'max-h-0'} overflow-hidden transition-all duration-500 ease-in-out backdrop-blur-lg bg-gray-800/50`}>
+      <div className={`md:hidden ${isMenuOpen ? 'max-h-screen' : 'max-h-0'} overflow-hidden transition-all duration-500 ease-in-out ${mobileMenuClass}`}>
         <nav className="flex flex-col items-center py-4 space-y-4">
           {navLinks.map((link) => (
             <button

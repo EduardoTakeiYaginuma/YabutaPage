@@ -38,7 +38,7 @@ const App: React.FC = () => {
 
       {/* Content */}
       <div className="relative z-10">
-      <Header />
+      <Header variant={selectedProduct ? 'product-detail' : 'default'} />
       {selectedProduct ? (
         <ProductDetail product={selectedProduct} onBack={handleBackToProducts} />
       ) : (
