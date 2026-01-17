@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const locationDetails = {
     SP: {
@@ -50,17 +50,7 @@ const allCities = [
     { name: 'Angico', state: 'TO' },
 ];
 
-const YabutaLogoLightBg: React.FC = () => (
-    <div className="flex items-center space-x-2">
-        <div className="bg-yabuta-yellow p-1.5 rounded-md">
-            <span className="text-yabuta-dark font-bold text-xl font-serif">yb</span>
-        </div>
-        <div>
-           <span className="text-xl font-bold tracking-wider text-yabuta-dark">YABUTA</span>
-           <p className="text-xs text-gray-500 -mt-1 ml-px">desde 1947</p>
-        </div>
-    </div>
-);
+import logoYabutaPositivo from './images/logo/logo_yabuta_positivo.svg';
 
 const BrazilMap: React.FC<{ onStateClick: (state: StateKey) => void; selectedState: StateKey | null }> = ({ onStateClick, selectedState }) => {
     // Cores para cada estado
@@ -163,7 +153,7 @@ const BrazilMap: React.FC<{ onStateClick: (state: StateKey) => void; selectedSta
 const InitialContent: React.FC = () => (
     <div className="w-full">
         <div className="bg-yabuta-yellow p-4 text-center">
-            <h3 className="font-bold text-yabuta-dark tracking-wider">ESCOLHA UM ESTADO</h3>
+            <h3 className="font-bold text-yabuta-dark tracking-wider">NOSSO NINHO: DE ONDE VÊM NOSSOS OVOS</h3>
         </div>
         <div className="p-6">
             <p className="text-yabuta-dark mb-4 text-sm leading-relaxed">Clique em um estado do mapa e veja mais informações sobre nossas unidades.</p>
@@ -171,11 +161,11 @@ const InitialContent: React.FC = () => (
             
             <div className="grid grid-cols-3 gap-4 my-4">
                 <div className="col-span-1 space-y-4">
-                    <div className="bg-gray-100 p-4 text-center rounded-lg">
+                    <div className="bg-gray-100 p-4 text-center" style={{ borderRadius: '50% 50% 50% 50% / 60% 60% 40% 40%' }}>
                         <p className="text-3xl font-serif text-yabuta-yellow">4</p>
                         <p className="text-xs text-gray-600">estados</p>
                     </div>
-                    <div className="bg-gray-100 p-4 text-center rounded-lg">
+                    <div className="bg-gray-100 p-4 text-center" style={{ borderRadius: '50% 50% 50% 50% / 60% 60% 40% 40%' }}>
                         <p className="text-3xl font-serif text-yabuta-yellow">9</p>
                         <p className="text-xs text-gray-600">cidades</p>
                     </div>
@@ -192,7 +182,7 @@ const InitialContent: React.FC = () => (
             </div>
 
             <div className="bg-gray-100 p-4 mt-4 flex justify-center items-center rounded-lg">
-                <YabutaLogoLightBg />
+                <img src={logoYabutaPositivo} alt="Yabuta" className="h-20" />
             </div>
         </div>
     </div>
@@ -208,11 +198,22 @@ const StateDetails: React.FC<{ stateKey: StateKey; onBack: () => void }> = ({ st
             <div className="p-6">
                 <div className="space-y-6">
                     <div>
-                        <h4 className="text-lg font-bold text-yabuta-dark mb-2">Cidades com Unidades:</h4>
+                        <div className="flex items-center mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-yabuta-yellow mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <h4 className="text-lg font-bold text-yabuta-dark">Cidades com Unidades:</h4>
+                        </div>
                         <p className="text-gray-700 bg-gray-100 p-3 rounded-lg">{data.cities.join(', ')}</p>
                     </div>
                     <div className="pt-4 border-t border-gray-200">
-                        <h4 className="text-lg font-bold text-yabuta-dark mb-3">Parceiros e Distribuidores (Exemplos):</h4>
+                        <div className="flex items-center mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-yabuta-yellow mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 016-6h6a6 6 0 016 6v1H9M15 21a2 2 0 002-2v-1a6 6 0 00-6-6h-1.5" />
+                            </svg>
+                            <h4 className="text-lg font-bold text-yabuta-dark">Parceiros e Distribuidores (Exemplos):</h4>
+                        </div>
                         <div className="space-y-3">
                             {data.partners.map(partner => (
                                 <div key={partner.name} className="bg-gray-100 p-3 rounded-lg">
@@ -232,8 +233,35 @@ const StateDetails: React.FC<{ stateKey: StateKey; onBack: () => void }> = ({ st
 };
 
 
+const useScrollAnimation = () => {
+    const [isIntersecting, setIsIntersecting] = useState(false);
+    const ref = React.useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsIntersecting(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (ref.current) {
+            observer.observe(ref.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
+
+    return [ref, isIntersecting] as const;
+};
+
 const Locations: React.FC = () => {
     const [selectedState, setSelectedState] = useState<StateKey | null>(null);
+    const [titleRef, isTitleVisible] = useScrollAnimation();
+    const [contentRef, isContentVisible] = useScrollAnimation();
 
   return (
     <section 
@@ -243,16 +271,16 @@ const Locations: React.FC = () => {
     >
       <div className="absolute inset-0 bg-yabuta-dark bg-opacity-80"></div>
       <div className="container mx-auto px-6 relative z-10">
-        <div className="mb-16">
+        <div ref={titleRef} className={`mb-16 transition-all duration-1000 ${isTitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
           <h2 className="text-4xl md:text-5xl font-serif text-white">Unidades</h2>
           <div className="w-24 h-1 bg-yabuta-yellow mt-4"></div>
         </div>
 
-        <div className="grid md:grid-cols-5 gap-8 items-center">
-            <div className="md:col-span-3 bg-white p-4 sm:p-8 rounded-lg shadow-2xl">
+        <div ref={contentRef} className={`grid md:grid-cols-5 gap-8 items-center transition-all duration-1000 delay-200 ${isContentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+            <div className="md:col-span-3 bg-white/30 backdrop-blur-sm p-4 sm:p-8 rounded-lg shadow-2xl">
                 <BrazilMap onStateClick={setSelectedState} selectedState={selectedState} />
             </div>
-            <div className="md:col-span-2 bg-white rounded-lg shadow-2xl min-h-[400px] flex items-center transition-all duration-500 ease-in-out">
+            <div className="md:col-span-2 bg-white/30 backdrop-blur-sm rounded-lg shadow-2xl min-h-[400px] flex items-center transition-all duration-500 ease-in-out">
                 {!selectedState ? (
                     <InitialContent />
                 ) : (

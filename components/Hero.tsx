@@ -21,11 +21,11 @@ const Hero: React.FC = () => {
     <section id="hero" className="relative h-screen flex items-center justify-center text-white">
       <div className="absolute inset-0 bg-black/40"></div>
       <div className="relative z-10 text-center p-4">
-        <div className={`mb-6 transition-all ease-out duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+        <div className={`mb-6 transition-all ease-out duration-1000 ${isLoaded ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-5 scale-95'}`}>
             <img
               src={logoYabuta}
               alt="Yabuta desde 1947"
-              className="h-32 md:h-40 lg:h-48 w-auto mx-auto"
+              className="h-32 md:h-40 lg:h-48 w-auto mx-auto transition-all duration-300 hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] hover:scale-105"
             />
         </div>
         <p className={`text-xl md:text-2xl max-w-2xl mx-auto mb-10 font-light transition-opacity ease-out duration-1000 delay-200 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>

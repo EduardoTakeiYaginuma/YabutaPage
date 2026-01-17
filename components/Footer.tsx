@@ -1,13 +1,9 @@
 
 import React from 'react';
+import logoYabuta from './images/logo/logo_yabuta_negativo.svg';
 
 const YabutaLogo: React.FC = () => (
-    <div className="flex items-center space-x-2">
-        <div className="bg-yabuta-yellow p-2 rounded-md">
-            <span className="text-white font-bold text-2xl font-serif">yb</span>
-        </div>
-        <span className="text-2xl font-bold tracking-wider text-white">YABUTA</span>
-    </div>
+    <img src={logoYabuta} alt="Yabuta" className="h-20" />
 );
 
 const Footer: React.FC = () => {

@@ -9,6 +9,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ProductDetail from './components/ProductDetail';
 import type { Product } from './types';
+import SideNav from './components/SideNav';
 import backgroundImage from './components/images/background/background.png';
 
 const App: React.FC = () => {
@@ -39,6 +40,7 @@ const App: React.FC = () => {
       {/* Content */}
       <div className="relative z-10">
       <Header variant={selectedProduct ? 'product-detail' : 'default'} />
+      {!selectedProduct && <SideNav />}
       {selectedProduct ? (
         <ProductDetail product={selectedProduct} onBack={handleBackToProducts} />
       ) : (
