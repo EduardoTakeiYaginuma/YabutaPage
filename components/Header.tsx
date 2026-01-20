@@ -1,11 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
-import logoYb from './images/logo/logo_yb_negativo.svg';
+import logoYabuta from './images/logo/logo_yabuta_negativo.svg';
 
 const YabutaLogo: React.FC = () => (
     <div className="flex items-center space-x-2">
-        <img src={logoYb} alt="Yabuta" className="h-12 w-14" />
-        <span className="text-2xl font-bold tracking-wider text-white">YABUTA</span>
+        <img src={logoYabuta} alt="Yabuta" className="h-12" />
     </div>
 );
 
@@ -62,30 +61,33 @@ const Header: React.FC<{ variant?: 'default' | 'product-detail' }> = ({ variant 
             <button
               key={link.id}
               onClick={() => scrollToSection(link.id)}
-              className="text-white font-medium hover:text-yabuta-yellow transition-colors duration-300 uppercase tracking-widest text-sm"
+              className="text-white font-medium relative group transition-colors duration-300 uppercase tracking-widest text-sm"
             >
-              {link.label}
+              <span>{link.label}</span>
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-yabuta-yellow transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
             </button>
           ))}
         </nav>
 
         <div className="md:hidden">
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none">
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}></path>
-            </svg>
+          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none z-50">
+            <div className="w-8 h-8 flex flex-col justify-around">
+              <span className={`block w-full h-0.5 bg-white transition-transform duration-300 ease-in-out ${isMenuOpen ? 'transform rotate-45 translate-y-2' : ''}`}></span>
+              <span className={`block w-full h-0.5 bg-white transition-opacity duration-300 ease-in-out ${isMenuOpen ? 'opacity-0' : ''}`}></span>
+              <span className={`block w-full h-0.5 bg-white transition-transform duration-300 ease-in-out ${isMenuOpen ? 'transform -rotate-45 -translate-y-2' : ''}`}></span>
+            </div>
           </button>
         </div>
       </div>
       
       {/* Mobile Menu */}
-      <div className={`md:hidden ${isMenuOpen ? 'max-h-screen' : 'max-h-0'} overflow-hidden transition-all duration-500 ease-in-out ${mobileMenuClass}`}>
-        <nav className="flex flex-col items-center py-4 space-y-4">
+      <div className={`md:hidden fixed top-0 right-0 h-full w-64 ${mobileMenuClass} transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out z-40`}>
+        <nav className="flex flex-col items-center pt-24 space-y-8">
           {navLinks.map((link) => (
             <button
               key={link.id}
               onClick={() => scrollToSection(link.id)}
-              className="text-white font-medium hover:text-yabuta-yellow transition-colors duration-300 uppercase tracking-widest"
+              className="text-white font-medium hover:text-yabuta-yellow transition-colors duration-300 uppercase tracking-widest text-lg"
             >
               {link.label}
             </button>
