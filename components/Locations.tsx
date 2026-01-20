@@ -1,45 +1,144 @@
 
 import React, { useState, useEffect, useCallback, memo } from 'react';
 
+// Importações de imagens
+import logoYabutaPositivo from './images/logo/logo_yabuta_positivo.svg';
+import logoMatriz from './images/partners/info-logo-matriz.jpg';
+import logoPoxoreo from './images/partners/info-logo-poxoreo.jpg';
+import logoSinop from './images/partners/info-logo-sinop.jpg';
+import logoJatei from './images/partners/info-logo-jatei.jpg';
+import logoYokochi from './images/partners/info-logo-yokochi.jpg';
+
+// Importações de imagens overview
+import poxoreoOverview from './images/poxoreo-overview.jpg';
+import sinopOverview from './images/sinop-overview.jpg';
+import angicoOverview from './images/angico-overview.jpg';
+import ivinheraOverview from './images/ivinhema-overview.jpg';
+import jateiOverview from './images/jatei-overview.jpg';
+import matrizOverview from './images/matriz-overview.jpg';
+import yokochiOverview from './images/yokochi-overview.jpg';
+import queirozOverview from './images/queiroz-overview.jpg';
+import ranchariaOverview from './images/rancharia-overview.jpg';
+import rinopolisOverview from './images/rinopolis-overview.jpg';
+
 const locationDetails = {
     SP: {
         name: 'São Paulo',
         cities: ['Bastos', 'Rancharia', 'Queiroz', 'Rinópolis'],
         units: [
-            { name: 'Unidade Matriz', city: 'Bastos - SP', image: logoMatriz },
-            { name: 'Unidade Yabuta', city: 'Queiróz - SP', image: logoMatriz },
-            { name: 'Unidade Rancharia', city: 'Rancharia - SP', image: logoMatriz },
-            { name: 'Unidade Rinopolis', city: 'Rinopolis - SP', image: logoMatriz },
-            { name: 'Unidade Yokochi', city: 'Bastos - SP', image: logoYokochi }
+            { 
+                name: 'Yabuta - Unidade Matriz', 
+                city: 'Bastos - SP', 
+                image: logoMatriz,
+                overviewImage: matrizOverview,
+                address: 'Granja Yabuta, Secção União I, s/n\nZona Rural - Cx. Postal 187\nCEP:17690-000 - Bastos-SP',
+                phone: '+55 (14) 3478-7002\n+55 (14) 9 8140-3765\n+55 (14) 9 9755-6050'
+            },
+            { 
+                name: 'Unidade Yabuta', 
+                city: 'Queiróz - SP', 
+                image: logoMatriz,
+                overviewImage: queirozOverview,
+                address: 'Fazenda São Bento, Rod. Queiroz a Tupã, KM 6\nBairro Águas Claras - Cx.Postal 23\nCEP:17590-000 - Queiróz-SP',
+                phone: '+55 (14) 3478-7002'
+            },
+            { 
+                name: 'Unidade Rancharia', 
+                city: 'Rancharia - SP', 
+                image: logoMatriz,
+                overviewImage: ranchariaOverview,
+                address: 'Estrada Vicinal Waldemar Casagrande KM 4\nBairro Saltinho - Zona Rural\nCEP:19600-000 - Rancharia-SP',
+                phone: '+55 (14) 3478-7002'
+            },
+            { 
+                name: 'Unidade Rinopolis', 
+                city: 'Rinopolis - SP', 
+                image: logoMatriz,
+                overviewImage: rinopolisOverview,
+                address: 'Fazenda Carú, Bairro Rio Feio, s/n\nZona Rural - Cx. Postal 44\nCEP:17740-000 - Rinópolis-SP',
+                phone: '+55 (14) 3478-7002'
+            },
+            { 
+                name: 'Unidade Yokochi', 
+                city: 'Bastos - SP', 
+                image: logoYokochi,
+                overviewImage: yokochiOverview,
+                address: 'Granja Yokochi, Secção Cascata, s/n\nZona Rural - Cx. Postal 187\nCEP:17690-000 - Bastos-SP',
+                phone: '+55 (14) 3478-7002\n+55 (14) 9 98140-3765\n+55 (14) 9 99755-6050'
+            }
         ]
     },
     MT: {
         name: 'Mato Grosso',
         cities: ['Poxoréo', 'Sinop'],
         units: [
-            { name: 'Unidade Primavera', city: 'Poxoréo - MT', image: logoPoxoreo },
-            { name: 'Unidade Sinop', city: 'Sinop - MT', image: logoSinop }
+            { 
+                name: 'Granja Primavera', 
+                city: 'Poxoréo - MT', 
+                image: logoPoxoreo,
+                overviewImage: poxoreoOverview,
+                address: 'Rodovia BR070 KM 293 s/n.º - Zona Rural\nCEP: 78800-000 - Poxoréo-MT',
+                phone: '+55 (66) 3498-8266'
+            },
+            { 
+                name: 'Granja Sinop', 
+                city: 'Sinop - MT', 
+                image: logoSinop,
+                overviewImage: sinopOverview,
+                address: 'Estrada Rosália s/n.º, Bairro Angélica - Zona Rural\nCEP: 78550-236 - Sinop-MT',
+                phone: '+55 (66) 3532-2445'
+            }
         ]
     },
     MS: {
         name: 'Mato Grosso do Sul',
         cities: ['Ivinhema', 'Jateí'],
         units: [
-            { name: 'Unidade Ivinhema', city: 'Ivinhema - MS', image: logoJatei },
-            { name: 'Unidade Jateí', city: 'Jateí - MS', image: logoMatriz }
+            { 
+                name: 'Unidade Ivinhema', 
+                city: 'Ivinhema - MS', 
+                image: logoJatei,
+                overviewImage: ivinheraOverview,
+                address: 'Rodovia MS 376 KM 131, Granja Itapoã s/n - Zona Rural\nCEP: 79740-000 - Ivinhema-MS',
+                phone: '+55 (14) 3478-7002'
+            },
+            { 
+                name: 'Ninho Feliz', 
+                city: 'Jateí - MS', 
+                image: logoMatriz,
+                overviewImage: jateiOverview,
+                address: 'Fazenda Filadelphia, Estrada Pica Fumo-KM 17 s/n - Zona Rural\nCEP:79720-022 - Jateí-MS',
+                phone: '+55 (14) 3478-7002'
+            }
         ]
     },
     TO: {
         name: 'Tocantins',
         cities: ['Angico'],
         units: [
-            { name: 'Unidade Angico', city: 'Angico-TO', image: logoMatriz }
+            { 
+                name: 'Unidade Angico', 
+                city: 'Angico-TO', 
+                image: logoMatriz,
+                overviewImage: angicoOverview,
+                address: 'Estrada de Angico ao Povoado de Tamboril, s/nº - Zona Rural\nCEP: 77905-000 - Angico-TO',
+                phone: '+55 (14) 3478-7002'
+            }
         ]
     }
 };
 
 // FIX: Removed duplicate 'typeof' which was causing a syntax error.
 type StateKey = keyof typeof locationDetails;
+
+type Unit = {
+    name: string;
+    city: string;
+    image: string;
+    overviewImage: string;
+    address: string;
+    phone: string;
+};
 
 const allCities = [
     { name: 'Bastos', state: 'SP' },
@@ -52,13 +151,6 @@ const allCities = [
     { name: 'Jateí', state: 'MS' },
     { name: 'Angico', state: 'TO' },
 ];
-
-import logoYabutaPositivo from './images/logo/logo_yabuta_positivo.svg';
-import logoMatriz from './images/partners/info-logo-matriz.jpg';
-import logoPoxoreo from './images/partners/info-logo-poxoreo.jpg';
-import logoSinop from './images/partners/info-logo-sinop.jpg';
-import logoJatei from './images/partners/info-logo-jatei.jpg';
-import logoYokochi from './images/partners/info-logo-yokochi.jpg';
 
 // Estilos extraídos para fora do componente (evita recriação a cada render)
 const STATE_COLORS: Record<StateKey, string> = {
@@ -424,6 +516,7 @@ const InitialContent: React.FC = memo(() => (
 const StateDetails: React.FC<{ stateKey: StateKey; onBack: () => void }> = memo(({ stateKey, onBack }) => {
     const data = locationDetails[stateKey];
     const hasMultipleUnits = data.units.length > 2;
+    const [expandedUnit, setExpandedUnit] = useState<number | null>(null);
 
     return (
         <div className="w-full h-full flex flex-col max-h-[800px]">
@@ -451,38 +544,84 @@ const StateDetails: React.FC<{ stateKey: StateKey; onBack: () => void }> = memo(
 
                 <div className="relative flex-1 min-h-0">
                     <div
-                        className="space-y-2 max-w-sm mx-auto overflow-y-scroll pr-2"
+                        className="space-y-3 max-w-sm mx-auto overflow-y-scroll pr-2"
                         style={{
                             maxHeight: '320px',
                             scrollbarWidth: 'thin',
                             scrollbarColor: '#F5B800 #e5e7eb'
                         }}
                     >
-                        {data.units.map((unit, index) => (
-                            <div
-                                key={index}
-                                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-                            >
-                                <div className="bg-gray-200 p-6 flex items-center justify-center h-32">
-                                    <img
-                                        src={unit.image}
-                                        alt={unit.name}
-                                        className="max-h-full max-w-full object-contain"
-                                    />
-                                </div>
-                                <div className="bg-gray-700 px-4 py-3 flex items-center justify-between">
-                                    <div>
-                                        <h4 className="text-white font-bold text-sm leading-tight">{unit.name}</h4>
-                                        <p className="text-gray-300 text-xs mt-0.5">{unit.city}</p>
+                        {data.units.map((unit, index) => {
+                            const isExpanded = expandedUnit === index;
+                            return (
+                                <div
+                                    key={index}
+                                    className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all"
+                                >
+                                    <div 
+                                        className="cursor-pointer"
+                                        onClick={() => setExpandedUnit(isExpanded ? null : index)}
+                                    >
+                                        <div className="bg-gray-200 p-6 flex items-center justify-center h-32">
+                                            <img
+                                                src={unit.image}
+                                                alt={unit.name}
+                                                className="max-h-full max-w-full object-contain"
+                                            />
+                                        </div>
+                                        <div className="bg-gray-700 px-4 py-3 flex items-center justify-between">
+                                            <div>
+                                                <h4 className="text-white font-bold text-sm leading-tight">{unit.name}</h4>
+                                                <p className="text-gray-300 text-xs mt-0.5">{unit.city}</p>
+                                            </div>
+                                            <div className="bg-yabuta-yellow rounded-sm p-2 ml-2">
+                                                <svg 
+                                                    xmlns="http://www.w3.org/2000/svg" 
+                                                    className={`h-4 w-4 text-yabuta-dark transition-transform ${isExpanded ? 'rotate-90' : ''}`} 
+                                                    viewBox="0 0 20 20" 
+                                                    fill="currentColor"
+                                                >
+                                                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                                                </svg>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="bg-yabuta-yellow rounded-sm p-2 ml-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yabuta-dark" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                                        </svg>
-                                    </div>
+                                    
+                                    {isExpanded && (
+                                        <div className="p-4 bg-gray-50 border-t border-gray-200 animate-fadeIn">
+                                            <img src={unit.overviewImage} alt={unit.name} className="w-full h-40 object-cover rounded-lg mb-3" />
+                                            
+                                            <div className="space-y-3">
+                                                <div className="flex items-start">
+                                                    <div className="bg-yabuta-yellow/20 p-2 rounded mr-3 flex-shrink-0">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yabuta-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                        </svg>
+                                                    </div>
+                                                    <div>
+                                                        <h5 className="font-bold text-gray-900 text-xs mb-1">Endereço</h5>
+                                                        <p className="text-gray-700 text-xs whitespace-pre-line leading-relaxed">{unit.address}</p>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div className="flex items-start">
+                                                    <div className="bg-yabuta-yellow/20 p-2 rounded mr-3 flex-shrink-0">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yabuta-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                                        </svg>
+                                                    </div>
+                                                    <div>
+                                                        <h5 className="font-bold text-gray-900 text-xs mb-1">Telefone</h5>
+                                                        <p className="text-gray-700 text-xs whitespace-pre-line leading-relaxed">{unit.phone}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                     {hasMultipleUnits && (
                         <div className="absolute bottom left-0 right-0 h-6 bg-gradient-to-t from-white/80 to-transparent pointer-events-none flex items-end justify-center pb-1">
