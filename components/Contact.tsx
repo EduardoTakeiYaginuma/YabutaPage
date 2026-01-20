@@ -42,7 +42,7 @@ const Contact: React.FC = () => {
                 backgroundAttachment: 'fixed'
             }}
         >
-            <div className="absolute inset-0 bg-white/90"></div>
+            <div className="absolute inset-0 bg-white/80"></div>
             <div className="container mx-auto px-6 relative z-10">
                 <div className="text-center mb-16">
                     <h2 className="text-5xl md:text-6xl font-serif text-yabuta-dark">Fale Conosco</h2>

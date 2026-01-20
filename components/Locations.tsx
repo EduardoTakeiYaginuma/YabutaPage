@@ -179,7 +179,7 @@ const BrazilMap: React.FC<{ onStateClick: (state: StateKey) => void; selectedSta
 
     return (
         <div className="flex items-center justify-center w-full h-full">
-            <svg version="1.1" id="svg-map" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="450px" height="460px" viewBox="0 0 450 460" enableBackground="new 0 0 450 460" xmlSpace="preserve" className="mx-auto">
+            <svg version="1.1" id="svg-map" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100%" height="auto" viewBox="0 0 450 460" enableBackground="new 0 0 450 460" xmlSpace="preserve" className="mx-auto max-w-full" style={{ maxHeight: '90%' }}>
                 <style>
                     {`
                         #svg-map path { fill: #c2c2c2; }
@@ -427,76 +427,76 @@ const BrazilMap: React.FC<{ onStateClick: (state: StateKey) => void; selectedSta
 
 const InitialContent: React.FC = memo(() => (
     <div className="w-full h-full flex flex-col">
-        <div className="bg-gradient-to-r from-yabuta-yellow to-amber-400 p-6 text-center relative overflow-hidden">
+        <div className="bg-gradient-to-r from-yabuta-yellow to-amber-400 p-4 md:p-6 text-center relative overflow-hidden">
             <div className="absolute inset-0 opacity-10">
                 <div className="absolute top-0 left-0 w-32 h-32 bg-white rounded-full -translate-x-16 -translate-y-16"></div>
                 <div className="absolute bottom-0 right-0 w-24 h-24 bg-white rounded-full translate-x-12 translate-y-12"></div>
             </div>
             <div className="relative z-10">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto mb-2 text-yabuta-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 md:h-8 md:w-8 mx-auto mb-2 text-yabuta-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <h3 className="text-xl font-bold text-yabuta-dark tracking-wide leading-tight">
+                <h3 className="text-lg md:text-xl font-bold text-yabuta-dark tracking-wide leading-tight">
                     SELECIONE UM ESTADO
                 </h3>
               
             </div>
         </div>
         
-        <div className="p-6 flex-1 overflow-y-auto">
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-l-4 border-yabuta-yellow p-4 rounded-r-lg mb-6 shadow-sm">
+        <div className="p-4 md:p-6 flex-1 overflow-y-auto">
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-l-4 border-yabuta-yellow p-3 md:p-4 rounded-r-lg mb-4 md:mb-6 shadow-sm">
                 <div className="flex items-start">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-yabuta-yellow mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 md:h-5 md:w-5 text-yabuta-yellow mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                     </svg>
-                    <p className="text-sm text-gray-700 leading-relaxed">
+                    <p className="text-xs md:text-sm text-gray-700 leading-relaxed">
                         <span className="font-semibold text-yabuta-dark">Clique em um estado amarelo</span> no mapa para ver detalhes sobre nossas unidades, parceiros e distribuidores.
                     </p>
                 </div>
             </div>
 
-            <div className="mb-6">
-                <h4 className="font-bold text-yabuta-dark text-lg mb-4 flex items-center">
-                    <span className="w-1 h-6 bg-yabuta-yellow mr-3 rounded-full"></span>
+            <div className="mb-4 md:mb-6">
+                <h4 className="font-bold text-yabuta-dark text-base md:text-lg mb-3 md:mb-4 flex items-center">
+                    <span className="w-1 h-5 md:h-6 bg-yabuta-yellow mr-2 md:mr-3 rounded-full"></span>
                     Nossa Presença
                 </h4>
                 
-                <div className="grid grid-cols-2 gap-3 mb-4">
-                    <div className="bg-gradient-to-br from-white to-gray-50 p-5 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+                <div className="grid grid-cols-2 gap-2 md:gap-3 mb-3 md:mb-4">
+                    <div className="bg-gradient-to-br from-white to-gray-50 p-3 md:p-5 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
                         <div className="flex items-center justify-center mb-2">
-                            <div className="bg-yabuta-yellow/10 p-3 rounded-full">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-yabuta-yellow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <div className="bg-yabuta-yellow/10 p-2 md:p-3 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 md:h-8 md:w-8 text-yabuta-yellow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                                 </svg>
                             </div>
                         </div>
-                        <p className="text-4xl font-bold text-yabuta-yellow text-center">4</p>
+                        <p className="text-3xl md:text-4xl font-bold text-yabuta-yellow text-center">4</p>
                         <p className="text-xs text-gray-500 text-center uppercase tracking-wide font-semibold mt-1">Estados</p>
                     </div>
                     
-                    <div className="bg-gradient-to-br from-white to-gray-50 p-5 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+                    <div className="bg-gradient-to-br from-white to-gray-50 p-3 md:p-5 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
                         <div className="flex items-center justify-center mb-2">
-                            <div className="bg-yabuta-yellow/10 p-3 rounded-full">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-yabuta-yellow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <div className="bg-yabuta-yellow/10 p-2 md:p-3 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 md:h-8 md:w-8 text-yabuta-yellow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                                 </svg>
                             </div>
                         </div>
-                        <p className="text-4xl font-bold text-yabuta-yellow text-center">9</p>
+                        <p className="text-3xl md:text-4xl font-bold text-yabuta-yellow text-center">9</p>
                         <p className="text-xs text-gray-500 text-center uppercase tracking-wide font-semibold mt-1">Cidades</p>
                     </div>
                 </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-md border border-gray-100 p-5">
-                <h5 className="text-sm font-bold text-gray-700 mb-3 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yabuta-yellow mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <div className="bg-white rounded-xl shadow-md border border-gray-100 p-3 md:p-5">
+                <h5 className="text-xs md:text-sm font-bold text-gray-700 mb-2 md:mb-3 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 md:h-4 md:w-4 text-yabuta-yellow mr-2" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                     </svg>
                     Nossas Cidades
                 </h5>
-                <div className="grid grid-cols-1 gap-2 max-h-48 overflow-y-auto pr-2" style={{ scrollbarWidth: 'thin', scrollbarColor: '#F5B800 #f3f4f6' }}>
+                <div className="grid grid-cols-1 gap-2 max-h-32 md:max-h-48 overflow-y-auto pr-2" style={{ scrollbarWidth: 'thin', scrollbarColor: '#F5B800 #f3f4f6' }}>
                     {allCities.map(city => (
                         <div key={city.name} className="flex items-center justify-between bg-gradient-to-r from-gray-50 to-white p-2.5 rounded-lg border border-gray-100 hover:border-yabuta-yellow/30 transition-colors">
                             <span className="text-sm text-yabuta-dark font-medium">{city.name}</span>
@@ -697,21 +697,21 @@ const Locations: React.FC = () => {
     <section
       ref={sectionRef}
       id="locations"
-      className="py-20 relative bg-cover bg-center"
+      className="py-12 md:py-20 relative bg-cover bg-center"
       style={{ backgroundImage: "url('https://images.unsplash.com/photo-1599921867828-6395b37645dd?q=80&w=2070&auto=format&fit=crop')" }}
     >
       <div className="absolute inset-0 bg-yabuta-dark bg-opacity-80"></div>
-      <div className="container mx-auto px-6 relative z-10">
-        <div ref={titleRef} className={`mb-16 transition-all duration-1000 ${isTitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-          <h2 className="text-4xl md:text-5xl font-serif text-white">Unidades</h2>
-          <div className="w-24 h-1 bg-yabuta-yellow mt-4"></div>
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
+        <div ref={titleRef} className={`mb-8 md:mb-16 transition-all duration-1000 ${isTitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-white">Unidades</h2>
+          <div className="w-20 md:w-24 h-1 bg-yabuta-yellow mt-3 md:mt-4"></div>
         </div>
 
-        <div ref={contentRef} className={`grid md:grid-cols-5 gap-8 items-start transition-all duration-1000 delay-200 ${isContentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-            <div className="md:col-span-3 bg-white/30 backdrop-blur-sm p-4 sm:p-8 rounded-lg shadow-2xl">
+        <div ref={contentRef} className={`grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8 items-start transition-all duration-1000 delay-200 ${isContentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+            <div className="md:col-span-3 bg-white/30 backdrop-blur-sm p-3 sm:p-4 md:p-8 rounded-lg shadow-2xl">
                 <BrazilMap onStateClick={handleStateClick} selectedState={selectedState} />
             </div>
-            <div className="md:col-span-2 bg-white/30 backdrop-blur-sm rounded-lg shadow-2xl h-[600px] flex items-center transition-all duration-500 ease-in-out overflow-hidden">
+            <div className="md:col-span-2 bg-white/30 backdrop-blur-sm rounded-lg shadow-2xl h-[500px] md:h-[600px] flex items-center transition-all duration-500 ease-in-out overflow-hidden">
                 {!selectedState ? (
                     <InitialContent />
                 ) : (
