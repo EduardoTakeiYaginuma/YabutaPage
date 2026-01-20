@@ -519,7 +519,7 @@ const StateDetails: React.FC<{ stateKey: StateKey; onBack: () => void }> = memo(
     const [expandedUnit, setExpandedUnit] = useState<number | null>(null);
 
     return (
-        <div className="w-full h-full flex flex-col max-h-[800px]">
+        <div className="w-full h-full flex flex-col">
             <div className="bg-gradient-to-r from-yabuta-yellow to-amber-400 p-6 text-center relative overflow-hidden flex-shrink-0">
                 <div className="absolute inset-0 opacity-10">
                     <div className="absolute top-0 left-0 w-32 h-32 bg-white rounded-full -translate-x-16 -translate-y-16"></div>
@@ -531,7 +531,7 @@ const StateDetails: React.FC<{ stateKey: StateKey; onBack: () => void }> = memo(
                 </div>
             </div>
 
-            <div className="p-6 flex-1 min-h-0 flex flex-col">
+            <div className="p-6 flex-1 flex flex-col overflow-hidden">
                 <button
                     onClick={onBack}
                     className="mb-4 flex items-center text-yabuta-dark font-semibold hover:text-yabuta-yellow transition-colors flex-shrink-0"
@@ -542,11 +542,10 @@ const StateDetails: React.FC<{ stateKey: StateKey; onBack: () => void }> = memo(
                     Voltar ao mapa
                 </button>
 
-                <div className="relative flex-1 min-h-0">
+                <div className="flex-1 overflow-hidden">
                     <div
-                        className="space-y-3 max-w-sm mx-auto overflow-y-scroll pr-2"
+                        className="space-y-3 max-w-sm mx-auto overflow-y-auto pr-2 h-full"
                         style={{
-                            maxHeight: '320px',
                             scrollbarWidth: 'thin',
                             scrollbarColor: '#F5B800 #e5e7eb'
                         }}
@@ -666,17 +665,37 @@ const Locations: React.FC = () => {
     const [selectedState, setSelectedState] = useState<StateKey | null>(null);
     const [titleRef, isTitleVisible] = useScrollAnimation();
     const [contentRef, isContentVisible] = useScrollAnimation();
+    const sectionRef = React.useRef<HTMLElement>(null);
+    const savedScrollPosition = React.useRef<number>(0);
 
     const handleStateClick = useCallback((state: StateKey) => {
+        // Salva a posição do scroll antes de mudar o estado
+        savedScrollPosition.current = window.scrollY;
         setSelectedState(state);
     }, []);
 
     const handleBack = useCallback(() => {
+        // Salva a posição do scroll antes de voltar
+        savedScrollPosition.current = window.scrollY;
         setSelectedState(null);
     }, []);
 
+    // Restaura a posição do scroll após mudanças de estado
+    useEffect(() => {
+        if (savedScrollPosition.current > 0) {
+            // Usa múltiplos requestAnimationFrame para garantir que o layout foi recalculado
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    window.scrollTo(0, savedScrollPosition.current);
+                    savedScrollPosition.current = 0;
+                });
+            });
+        }
+    }, [selectedState]);
+
   return (
     <section
+      ref={sectionRef}
       id="locations"
       className="py-20 relative bg-cover bg-center"
       style={{ backgroundImage: "url('https://images.unsplash.com/photo-1599921867828-6395b37645dd?q=80&w=2070&auto=format&fit=crop')" }}
@@ -688,11 +707,11 @@ const Locations: React.FC = () => {
           <div className="w-24 h-1 bg-yabuta-yellow mt-4"></div>
         </div>
 
-        <div ref={contentRef} className={`grid md:grid-cols-5 gap-8 items-center transition-all duration-1000 delay-200 ${isContentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+        <div ref={contentRef} className={`grid md:grid-cols-5 gap-8 items-start transition-all duration-1000 delay-200 ${isContentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
             <div className="md:col-span-3 bg-white/30 backdrop-blur-sm p-4 sm:p-8 rounded-lg shadow-2xl">
                 <BrazilMap onStateClick={handleStateClick} selectedState={selectedState} />
             </div>
-            <div className="md:col-span-2 bg-white/30 backdrop-blur-sm rounded-lg shadow-2xl min-h-[400px] flex items-center transition-all duration-500 ease-in-out">
+            <div className="md:col-span-2 bg-white/30 backdrop-blur-sm rounded-lg shadow-2xl h-[600px] flex items-center transition-all duration-500 ease-in-out overflow-hidden">
                 {!selectedState ? (
                     <InitialContent />
                 ) : (
