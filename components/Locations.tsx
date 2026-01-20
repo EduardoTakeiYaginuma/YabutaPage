@@ -1,36 +1,39 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, memo } from 'react';
 
 const locationDetails = {
     SP: {
         name: 'São Paulo',
         cities: ['Bastos', 'Rancharia', 'Queiroz', 'Rinópolis'],
-        partners: [
-            { name: 'Distribuidor Parceiro Alpha', location: 'Grande São Paulo' },
-            { name: 'Supermercados Associados SP', location: 'Interior' }
+        units: [
+            { name: 'Unidade Matriz', city: 'Bastos - SP', image: logoMatriz },
+            { name: 'Unidade Yabuta', city: 'Queiróz - SP', image: logoMatriz },
+            { name: 'Unidade Rancharia', city: 'Rancharia - SP', image: logoMatriz },
+            { name: 'Unidade Rinopolis', city: 'Rinopolis - SP', image: logoMatriz },
+            { name: 'Unidade Yokochi', city: 'Bastos - SP', image: logoYokochi }
         ]
     },
     MT: {
         name: 'Mato Grosso',
         cities: ['Poxoréo', 'Sinop'],
-        partners: [
-            { name: 'Parceiro Logístico Centro-Oeste', location: 'Cuiabá e Região' },
-            { name: 'Rede Varejista Boreal', location: 'Norte do Estado' }
+        units: [
+            { name: 'Unidade Primavera', city: 'Poxoréo - MT', image: logoPoxoreo },
+            { name: 'Unidade Sinop', city: 'Sinop - MT', image: logoSinop }
         ]
     },
     MS: {
         name: 'Mato Grosso do Sul',
         cities: ['Ivinhema', 'Jateí'],
-        partners: [
-            { name: 'Cooperativa Agropecuária Sul-Mato-Grossense', location: 'Dourados' },
+        units: [
+            { name: 'Unidade Ivinhema', city: 'Ivinhema - MS', image: logoJatei },
+            { name: 'Unidade Jateí', city: 'Jateí - MS', image: logoMatriz }
         ]
     },
     TO: {
         name: 'Tocantins',
         cities: ['Angico'],
-        partners: [
-            { name: 'Fornecedor Norte Premium', location: 'Palmas' },
-            { name: 'Atacadista Tocantinense', location: 'Araguaína' }
+        units: [
+            { name: 'Unidade Angico', city: 'Angico-TO', image: logoMatriz }
         ]
     }
 };
@@ -51,34 +54,36 @@ const allCities = [
 ];
 
 import logoYabutaPositivo from './images/logo/logo_yabuta_positivo.svg';
+import logoMatriz from './images/partners/info-logo-matriz.jpg';
+import logoPoxoreo from './images/partners/info-logo-poxoreo.jpg';
+import logoSinop from './images/partners/info-logo-sinop.jpg';
+import logoJatei from './images/partners/info-logo-jatei.jpg';
+import logoYokochi from './images/partners/info-logo-yokochi.jpg';
 
-const BrazilMap: React.FC<{ onStateClick: (state: StateKey) => void; selectedState: StateKey | null }> = ({ onStateClick, selectedState }) => {
-    // Cores para cada estado
-    const stateColors: Record<StateKey, string> = {
-        TO: '#FFD700', // Gold
-        MT: '#F5B800', // Yabuta Yellow
-        MS: '#FFC72C', // Sunglow
-        SP: '#FFBF00', // Amber
-    };
+// Estilos extraídos para fora do componente (evita recriação a cada render)
+const STATE_COLORS: Record<StateKey, string> = {
+    TO: '#FFD700',
+    MT: '#F5B800',
+    MS: '#FFC72C',
+    SP: '#FFBF00',
+};
 
-    const getStateStyle = (stateId: StateKey) => {
-        const isSelected = selectedState === stateId;
-        return {
-            fill: stateColors[stateId],
-            stroke: isSelected ? '#333' : '#ffffff',
-            strokeWidth: isSelected ? 3 : 1.073,
-            strokeMiterlimit: 10,
-            cursor: 'pointer',
-            transition: 'all 0.3s ease'
-        };
-    };
+const GRAY_STYLE = {
+    fill: '#e1e1e1',
+    stroke: '#ffffff',
+    strokeWidth: 1.073,
+    strokeMiterlimit: 10
+} as const;
 
-    const grayStyle = {
-        fill: '#e1e1e1',
-        stroke: '#ffffff',
-        strokeWidth: 1.073,
-        strokeMiterlimit: 10
-    };
+const BrazilMap: React.FC<{ onStateClick: (state: StateKey) => void; selectedState: StateKey | null }> = memo(({ onStateClick, selectedState }) => {
+    const getStateStyle = useCallback((stateId: StateKey) => ({
+        fill: STATE_COLORS[stateId],
+        stroke: selectedState === stateId ? '#333' : '#ffffff',
+        strokeWidth: selectedState === stateId ? 3 : 1.073,
+        strokeMiterlimit: 10,
+        cursor: 'pointer',
+        transition: 'all 0.3s ease'
+    }), [selectedState]);
 
     return (
         <div className="flex items-center justify-center w-full h-full">
@@ -325,10 +330,10 @@ const BrazilMap: React.FC<{ onStateClick: (state: StateKey) => void; selectedSta
             </svg>
             </div>
     );
-};
+});
 
 
-const InitialContent: React.FC = () => (
+const InitialContent: React.FC = memo(() => (
     <div className="w-full h-full flex flex-col">
         <div className="bg-gradient-to-r from-yabuta-yellow to-amber-400 p-6 text-center relative overflow-hidden">
             <div className="absolute inset-0 opacity-10">
@@ -414,51 +419,83 @@ const InitialContent: React.FC = () => (
             </div>
         </div>
     </div>
-);
+));
 
-const StateDetails: React.FC<{ stateKey: StateKey; onBack: () => void }> = ({ stateKey, onBack }) => {
+const StateDetails: React.FC<{ stateKey: StateKey; onBack: () => void }> = memo(({ stateKey, onBack }) => {
     const data = locationDetails[stateKey];
+    const hasMultipleUnits = data.units.length > 2;
+
     return (
-        <div className="w-full">
-            <div className="bg-yabuta-yellow p-4 text-center">
-                <h3 className="font-bold text-yabuta-dark tracking-wider uppercase">{data.name}</h3>
-            </div>
-            <div className="p-6">
-                <div className="space-y-6">
-                    <div>
-                        <div className="flex items-center mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-yabuta-yellow mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                            <h4 className="text-lg font-bold text-yabuta-dark">Cidades com Unidades:</h4>
-                        </div>
-                        <p className="text-gray-700 bg-gray-100 p-3 rounded-lg">{data.cities.join(', ')}</p>
-                    </div>
-                    <div className="pt-4 border-t border-gray-200">
-                        <div className="flex items-center mb-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-yabuta-yellow mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 016-6h6a6 6 0 016 6v1H9M15 21a2 2 0 002-2v-1a6 6 0 00-6-6h-1.5" />
-                            </svg>
-                            <h4 className="text-lg font-bold text-yabuta-dark">Parceiros e Distribuidores (Exemplos):</h4>
-                        </div>
-                        <div className="space-y-3">
-                            {data.partners.map(partner => (
-                                <div key={partner.name} className="bg-gray-100 p-3 rounded-lg">
-                                    <p className="font-semibold text-yabuta-dark">{partner.name}</p>
-                                    <p className="text-sm text-gray-500">{partner.location}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+        <div className="w-full h-full flex flex-col max-h-[800px]">
+            <div className="bg-gradient-to-r from-yabuta-yellow to-amber-400 p-6 text-center relative overflow-hidden flex-shrink-0">
+                <div className="absolute inset-0 opacity-10">
+                    <div className="absolute top-0 left-0 w-32 h-32 bg-white rounded-full -translate-x-16 -translate-y-16"></div>
+                    <div className="absolute bottom-0 right-0 w-24 h-24 bg-white rounded-full translate-x-12 translate-y-12"></div>
                 </div>
-                <button onClick={onBack} className="mt-6 text-yabuta-dark font-bold hover:text-yabuta-yellow transition-colors">
-                    &larr; Voltar ao mapa
+                <div className="relative z-10">
+                    <h3 className="text-2xl font-bold text-yabuta-dark tracking-wide uppercase">{data.name}</h3>
+                    <p className="text-sm text-yabuta-dark/80 mt-1">{data.units.length} Unidades</p>
+                </div>
+            </div>
+
+            <div className="p-6 flex-1 min-h-0 flex flex-col">
+                <button
+                    onClick={onBack}
+                    className="mb-4 flex items-center text-yabuta-dark font-semibold hover:text-yabuta-yellow transition-colors flex-shrink-0"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+                    </svg>
+                    Voltar ao mapa
                 </button>
+
+                <div className="relative flex-1 min-h-0">
+                    <div
+                        className="space-y-2 max-w-sm mx-auto overflow-y-scroll pr-2"
+                        style={{
+                            maxHeight: '320px',
+                            scrollbarWidth: 'thin',
+                            scrollbarColor: '#F5B800 #e5e7eb'
+                        }}
+                    >
+                        {data.units.map((unit, index) => (
+                            <div
+                                key={index}
+                                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                            >
+                                <div className="bg-gray-200 p-6 flex items-center justify-center h-32">
+                                    <img
+                                        src={unit.image}
+                                        alt={unit.name}
+                                        className="max-h-full max-w-full object-contain"
+                                    />
+                                </div>
+                                <div className="bg-gray-700 px-4 py-3 flex items-center justify-between">
+                                    <div>
+                                        <h4 className="text-white font-bold text-sm leading-tight">{unit.name}</h4>
+                                        <p className="text-gray-300 text-xs mt-0.5">{unit.city}</p>
+                                    </div>
+                                    <div className="bg-yabuta-yellow rounded-sm p-2 ml-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yabuta-dark" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    {hasMultipleUnits && (
+                        <div className="absolute bottom left-0 right-0 h-6 bg-gradient-to-t from-white/80 to-transparent pointer-events-none flex items-end justify-center pb-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yabuta-yellow animate-bounce" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                            </svg>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
-};
+});
 
 
 const useScrollAnimation = () => {
@@ -491,9 +528,17 @@ const Locations: React.FC = () => {
     const [titleRef, isTitleVisible] = useScrollAnimation();
     const [contentRef, isContentVisible] = useScrollAnimation();
 
+    const handleStateClick = useCallback((state: StateKey) => {
+        setSelectedState(state);
+    }, []);
+
+    const handleBack = useCallback(() => {
+        setSelectedState(null);
+    }, []);
+
   return (
-    <section 
-      id="locations" 
+    <section
+      id="locations"
       className="py-20 relative bg-cover bg-center"
       style={{ backgroundImage: "url('https://images.unsplash.com/photo-1599921867828-6395b37645dd?q=80&w=2070&auto=format&fit=crop')" }}
     >
@@ -506,13 +551,13 @@ const Locations: React.FC = () => {
 
         <div ref={contentRef} className={`grid md:grid-cols-5 gap-8 items-center transition-all duration-1000 delay-200 ${isContentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
             <div className="md:col-span-3 bg-white/30 backdrop-blur-sm p-4 sm:p-8 rounded-lg shadow-2xl">
-                <BrazilMap onStateClick={setSelectedState} selectedState={selectedState} />
+                <BrazilMap onStateClick={handleStateClick} selectedState={selectedState} />
             </div>
             <div className="md:col-span-2 bg-white/30 backdrop-blur-sm rounded-lg shadow-2xl min-h-[400px] flex items-center transition-all duration-500 ease-in-out">
                 {!selectedState ? (
                     <InitialContent />
                 ) : (
-                    <StateDetails stateKey={selectedState} onBack={() => setSelectedState(null)} />
+                    <StateDetails stateKey={selectedState} onBack={handleBack} />
                 )}
             </div>
         </div>

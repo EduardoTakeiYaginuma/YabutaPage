@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -15,14 +15,14 @@ import backgroundImage from './components/images/background/background.png';
 const App: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  const handleProductSelect = (product: Product) => {
+  const handleProductSelect = useCallback((product: Product) => {
     setSelectedProduct(product);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  }, []);
 
-  const handleBackToProducts = () => {
+  const handleBackToProducts = useCallback(() => {
     setSelectedProduct(null);
-  };
+  }, []);
 
   return (
     <div className="relative min-h-screen text-yabuta-dark font-sans">

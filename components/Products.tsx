@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 import type { Product, ProductVariation } from '../types';
 
 // Imagens dos produtos
@@ -122,15 +122,15 @@ const products: Product[] = [
   },
 ];
 
-const ProductCard: React.FC<{ product: Product; onSelect: () => void }> = ({ product, onSelect }) => {
-  const getVariationDescription = (variation: ProductVariation) => {
+const ProductCard: React.FC<{ product: Product; onSelect: () => void }> = memo(({ product, onSelect }) => {
+  const getVariationDescription = useCallback((variation: ProductVariation) => {
     if (product.id === 'granel') {
-        return variation.primaryPackaging === 'Caixa' 
-            ? `Caixa de ${variation.quantity}` 
+        return variation.primaryPackaging === 'Caixa'
+            ? `Caixa de ${variation.quantity}`
             : `${variation.primaryPackaging} ${variation.quantity}`;
     }
     return `${variation.primaryPackaging} (${variation.quantity})`;
-  };
+  }, [product.id]);
 
   return (
     <div className="group cursor-pointer" onClick={onSelect}>
@@ -162,7 +162,7 @@ const ProductCard: React.FC<{ product: Product; onSelect: () => void }> = ({ pro
       </div>
     </div>
   );
-};
+});
 
 const Products: React.FC<{ onProductSelect: (product: Product) => void }> = ({ onProductSelect }) => {
   return (
