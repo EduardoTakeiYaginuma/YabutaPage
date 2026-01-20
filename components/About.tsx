@@ -56,8 +56,8 @@ const About: React.FC = () => {
   return (
     <section id="about" className="min-h-screen flex items-center py-12 bg-white">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-serif text-yabuta-dark">Nossa História</h2>
+        <div className="text-center mb-10">
+          <h2 className="text-6xl md:text-5xl font-serif text-yabuta-dark">Nossa História</h2>
           <div className="w-24 h-1 bg-yabuta-yellow mx-auto mt-3"></div>
         </div>
 
