@@ -146,16 +146,14 @@ const ProductCard: React.FC<{ product: Product; onSelect: () => void }> = memo((
 
 const Products: React.FC<{ onProductSelect: (product: Product) => void }> = ({ onProductSelect }) => {
   return (
-    <section id="products" className="py-20 bg-gradient-to-b from-orange-50 to-yellow-50">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          
-            <h2 className="text-5xl md:text-6xl font-serif text-yabuta-dark">Nossos Produtos</h2>
-      
-          <div className="w-32 h-2 bg-gradient-to-r from-yabuta-yellow via-orange-400 to-yabuta-yellow mx-auto mt-4 rounded-full"></div>
+    <section id="products" className="py-12 md:py-20 bg-gradient-to-br from-orange-50 via-yellow-50 to-orange-100">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-yabuta-dark px-2">Nossos Produtos</h2>
+          <div className="w-24 md:w-32 h-1.5 md:h-2 bg-gradient-to-r from-yabuta-yellow via-orange-400 to-yabuta-yellow mx-auto mt-3 md:mt-4 rounded-full"></div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} onSelect={() => onProductSelect(product)} />
           ))}
