@@ -25,15 +25,15 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen text-yabuta-dark font-sans">
+    <div className="relative min-h-screen text-yabuta-dark font-sans overflow-x-hidden">
       {/* Background image */}
       <div
-        className="fixed inset-0 z-0"
+        className="fixed inset-0 z-0 w-full h-full"
         style={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
+          backgroundRepeat: 'no-repeat'
         }}
       />
 
