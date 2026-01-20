@@ -1,5 +1,6 @@
 
-import React from 'react';
+import React, { useRef } from 'react';
+import emailjs from '@emailjs/browser';
 import teamImage from './images/Contact/team.png';
 
 const InfoBlock: React.FC<{ title: string, children: React.ReactNode }> = ({ title, children }) => (
@@ -23,10 +24,31 @@ const SocialIcon: React.FC<{ href: string, label: string, children: React.ReactN
 );
 
 const Contact: React.FC = () => {
+    const form = useRef<HTMLFormElement>(null);
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        alert('Obrigado pelo seu contato! Mensagem enviada (simulação).');
-        event.currentTarget.reset();
+
+        if (form.current) {
+            // TODO: Substitua com suas credenciais do EmailJS
+            // 1. Crie uma conta em https://www.emailjs.com
+            // 2. Obtenha seu Service ID, Template ID e Public Key
+            // 3. Cole-os abaixo
+            emailjs.sendForm(
+                'YOUR_SERVICE_ID',      // <- Insira seu Service ID
+                'YOUR_TEMPLATE_ID',     // <- Insira seu Template ID
+                form.current,
+                'YOUR_PUBLIC_KEY'       // <- Insira sua Public Key
+            )
+            .then((result) => {
+                console.log('SUCCESS!', result.text);
+                alert('Obrigado pelo seu contato! Sua mensagem foi enviada.');
+                form.current?.reset();
+            }, (error) => {
+                console.log('FAILED...', error.text);
+                alert('Ocorreu um erro ao enviar a mensagem. Tente novamente mais tarde.');
+            });
+        }
     };
 
     return (
@@ -61,7 +83,7 @@ const Contact: React.FC = () => {
 
                     {/* Right Column: Form */}
                     <div className="bg-white p-8 rounded-lg shadow-2xl text-yabuta-dark">
-                        <form onSubmit={handleSubmit}>
+                        <form ref={form} onSubmit={handleSubmit}>
                             <div className="flex justify-between items-center mb-8">
                                 <div className="flex items-center">
                                     <div className="w-4 h-4 rounded-full bg-yabuta-yellow mr-3"></div>
